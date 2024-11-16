@@ -1,0 +1,20 @@
+{
+  "seo": {
+    "title": "Welcome Back to Cairo Metro - Sign In for Seamless Travel",
+    "description": "Access your Cairo Metro Web App account and continue your journey with ease. Sign in to view your routes, saved destinations, and personalized preferences. Start your Cairo adventures right where you left off, effortlessly!"
+  },
+  "login": "Login",
+  "email": "Email Address",
+  "placeholder": "Enter an email address",
+  "or": "OR",
+  "signupInstead": {
+    "question": "You don’t have an account yet? {0}",
+    "signup": "Sign up"
+  },
+  "userNotFound": "User not found, please sign up",
+  "invalidEmail": "Invalid email address",
+  "somethingWentWrong": "Something went wrong, please try again",
+  "errors": {
+    "invalidLink": "Magic link is invalid or expired"
+  }
+}

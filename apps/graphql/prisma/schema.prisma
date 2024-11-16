@@ -1,0 +1,233 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator nexusPrisma {
+  provider = "nexus-prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String             @id @default(cuid()) @map("_id")
+  email            String             @unique
+  name             String
+  role             UserRole
+  picture          String?
+  magicToken       MagicToken[]
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  Otp              Otp[]
+  documentUrl      String?
+  documentVerified VerificationStatus @default(PENDING)
+  Subscriptions    Subscriptions[]
+  refunds          Refund[]
+  UserTickets      UserTickets[]
+  StaffInvitation  StaffInvitation[]
+  SearchHistory    SearchHistory[]
+  userCreditCards  UserCreditCard[]
+}
+
+model UserTickets {
+  id        String   @id @default(cuid()) @map("_id")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  from      Station  @relation("fromTickets", fields: [fromId], references: [id], onDelete: Cascade)
+  fromId    String
+  to        Station  @relation("toTickets", fields: [toId], references: [id], onDelete: Cascade)
+  toId      String
+  price     Float
+  date      DateTime
+  adults    Int?
+  children  Int?
+  seniors   Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  paymentId String?
+}
+
+model UserCreditCard {
+  id          String   @id @default(cuid()) @map("_id")
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  cardHolder  String
+  cardNumber  String
+  expiryMonth String
+  expiryYear  String
+  cardCvc     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model StaffInvitation {
+  id          String   @id @default(cuid()) @map("_id")
+  role        UserRole
+  name        String
+  email       String   @unique
+  createdAt   DateTime @default(now())
+  invitedBy   User     @relation(fields: [invitedById], references: [id], onDelete: Cascade)
+  invitedById String
+}
+
+model Subscriptions {
+  id        String           @id @default(cuid()) @map("_id")
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  type      SubscriptionType
+  tier      SubscriptionTier
+  price     Float
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  expiresAt DateTime
+  stripeId  String           @unique
+}
+
+model Otp {
+  id         String   @id @default(cuid()) @map("_id")
+  code       String   @unique
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  expiryDate DateTime
+  userId     String
+}
+
+model MagicToken {
+  id         String   @id @default(cuid()) @map("_id")
+  user       User     @relation(fields: [userID], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  expiryDate DateTime
+  userID     String
+}
+
+model Line {
+  id                    String                  @id @default(cuid()) @map("_id")
+  name                  String
+  name_ar               String
+  stations              Station[]               @relation("lineStations", fields: [stationIds], references: [id])
+  stationIds            String[]
+  StationPositionInLine StationPositionInLine[]
+  color                 String                  @default("#EA3347")
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  pricing               Pricing                 @relation(fields: [pricingId], references: [id])
+  pricingId             String                  @unique
+}
+
+model Station {
+  id                    String                  @id @default(cuid()) @map("_id")
+  name                  String
+  name_ar               String
+  lines                 Line[]                  @relation("lineStations", fields: [lineIds], references: [id])
+  lineIds               String[]
+  location              String
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  stationPositionInLine StationPositionInLine[]
+  departurePaths        Path[]                  @relation("departureStation")
+  destinationPath       Path[]                  @relation("destinationStation")
+  paths                 Path[]                  @relation(fields: [pathIds], references: [id])
+  pathIds               String[]
+  fromTickets           UserTickets[]           @relation("fromTickets")
+  toTickets             UserTickets[]           @relation("toTickets")
+  fromSearch            SearchHistory[]         @relation("fromSearch")
+  toSearch              SearchHistory[]         @relation("toSearch")
+}
+
+model StationPositionInLine {
+  id        String  @id @default(cuid()) @map("_id")
+  line      Line    @relation(fields: [lineId], references: [id], onDelete: Cascade)
+  lineId    String
+  station   Station @relation(fields: [stationId], references: [id], onDelete: Cascade)
+  stationId String
+  position  Int
+}
+
+model Path {
+  id                String    @id @default(cuid()) @map("_id")
+  departure         Station   @relation("departureStation", fields: [departureId], references: [id], onDelete: Cascade)
+  departureId       String    @unique
+  destination       Station   @relation("destinationStation", fields: [destinationId], references: [id], onDelete: Cascade)
+  destinationId     String    @unique
+  stationsInPath    Station[] @relation(fields: [stationsInPathIds], references: [id])
+  stationsInPathIds String[]
+}
+
+model Pricing {
+  id                    String   @id @default(cuid()) @map("_id")
+  line                  Line?
+  // 9 stations
+  priceZoneOne          Float
+  priceZoneOneSeniors   Float
+  // 16 stations
+  priceZoneTwo          Float
+  priceZoneTwoSeniors   Float
+  // +16 stations
+  priceZoneThree        Float
+  priceZoneThreeSeniors Float
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model Refund {
+  id          String       @id @default(cuid()) @map("_id")
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  status      RefundStatus @default(PENDING)
+  ticketType  TicketType
+  referenceId String
+  message     String
+  price       Float
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model SearchHistory {
+  id            String   @id @default(cuid()) @map("_id")
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String
+  from          Station  @relation("fromSearch", fields: [fromId], references: [id], onDelete: Cascade)
+  fromId        String
+  to            Station  @relation("toSearch", fields: [toId], references: [id], onDelete: Cascade)
+  toId          String
+  departureTime DateTime
+  createdAt     DateTime @default(now())
+}
+
+enum UserRole {
+  ADULT
+  SENIOR
+  ADMIN
+  CUSTOMER_SUPPORT
+}
+
+enum SubscriptionType {
+  MONTHLY
+  QUARTERLY
+  YEARLY
+}
+
+enum SubscriptionTier {
+  ONE_AREA
+  TWO_AREAS
+  THREE_AREAS
+}
+
+enum RefundStatus {
+  ACCEPTED
+  REJECTED
+  PENDING
+}
+
+enum VerificationStatus {
+  ACCEPTED
+  REJECTED
+  PENDING
+}
+
+enum TicketType {
+  TICKET
+  SUBSCRIPTION
+}

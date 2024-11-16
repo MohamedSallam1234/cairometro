@@ -1,0 +1,72 @@
+{
+  "language": "en",
+  "name": "English",
+  "title": "Cairo Metro",
+  "navigation": {
+    "home": "Home",
+    "support": "Support",
+    "subscriptions": "Subscriptions",
+    "help": "Help Center",
+    "instructions": {
+      "title": "Instructions",
+      "content": {
+        "specialNeeds": {
+          "title": "Special Needs",
+          "description": "Accessibility services available for the commuters"
+        },
+        "rules": {
+          "title": "Rules & Code of Conduct",
+          "description": "Rules and regulations to be followed by the commuters"
+        },
+        "linesAndSchedule": {
+          "title": "Lines and Schedule",
+          "description": "Lines and schedule of the metro"
+        }
+      }
+    },
+    "login": "Login",
+    "createAccount": "Create Account",
+    "createAnAccount": "Create an Account"
+  },
+  "footer": {
+    "metro": {
+      "title": "Metro",
+      "stations": "Stations",
+      "subscriptions": "Subscriptions",
+      "lines": "Lines",
+      "tickets": "Tickets"
+    },
+    "instructions": {
+      "title": "Instructions",
+      "specialNeeds": "Special Needs",
+      "rules": "Rules & Code of Conduct",
+      "schedule": "Schedule"
+    },
+    "development": {
+      "title": "Development",
+      "github": "Github Repository"
+    },
+    "getTheApp": "Get the app"
+  },
+  "components": {
+    "continueWithGoogle": {
+      "text": "Continue with Google"
+    }
+  },
+  "ticket": {
+    "viewDetails": "View Details",
+    "stations": "stations",
+    "free": "FREE",
+    "withSubscription": "with subscription"
+  },
+  "userMenu": {
+    "admin": "Admin",
+    "account": "Account",
+    "adminPanel": "Admin Panel",
+    "myTickets": "My Tickets",
+    "mySubscriptions": "My Subscriptions",
+    "logout": "Logout"
+  },
+  "egp": "EGP",
+  "egpShort": "EGP"
+}

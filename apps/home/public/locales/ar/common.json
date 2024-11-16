@@ -1,0 +1,72 @@
+{
+    "language": "ar",
+    "name": "العربية",
+    "title": "مترو القاهرة",
+    "navigation": {
+        "home": "الرئيسية",
+        "support": "الدعم",
+        "subscriptions": "الاشتراكات",
+        "help": "مركز المساعدة",
+        "instructions": {
+            "title": "التعليمات",
+            "content": {
+                "specialNeeds": {
+                    "title": "الاحتياجات الخاصة",
+                    "description": "خدمات اصحاب الهمم المتاحة"
+                },
+                "rules": {
+                    "title": "القوانين وقواعد السلوك",
+                    "description": "القواعد والأنظمة التي يجب أن يتبعها المسافرون"
+                },
+                "linesAndSchedule": {
+                    "title": "الخطوط وجدول القطارات",
+                    "description": "الخطوط وجدول القطارات"
+                }
+            }
+        },
+        "login": "تسجيل الدخول",
+        "createAccount": "إنشاء حساب",
+        "createAnAccount": "إنشاء حساب"
+    },
+    "footer": {
+        "metro": {
+            "title": "المترو",
+            "stations": "المحطات",
+            "subscriptions": "الاشتراكات",
+            "lines": "الخطوط",
+            "tickets": "التذاكر"
+        },
+        "instructions": {
+            "title": "التعليمات",
+            "specialNeeds": "الاحتياجات الخاصة",
+            "rules": "القوانين وقواعد السلوك",
+            "schedule": "جدول القطارات"
+        },
+        "development": {
+            "title": "التطوير",
+            "github": "Github Repository"
+        },
+        "getTheApp": "احصل على التطبيق"
+    },
+    "components": {
+        "continueWithGoogle": {
+            "text": "تسجيل الدخول باستخدام جوجل"
+        }
+    },
+    "ticket": {
+        "viewDetails": "عرض التفاصيل",
+        "stations": "محطات",
+        "free": "مجانا",
+        "withSubscription": "مع اشتراك"
+    },
+    "userMenu": {
+        "admin": "ادارة الموقع",
+        "account": "حسابي",
+        "adminPanel": "لوحة التحكم",
+        "myTickets": "تذاكري",
+        "mySubscriptions": "اشتراكاتي",
+        "logout": "تسجيل الخروج"
+    },
+    "egp": "جنيه مصري",
+    "egpShort": "ج.م"
+}
